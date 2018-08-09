@@ -1,0 +1,11 @@
+{
+    "discord": {
+        "token": "discord bot token",
+        "channel": "the id of the channel"
+    },
+    "reddit": {
+        "client_id": "reddit api client id",
+        "client_secret": "reddit api secret",
+        "subreddits": ["cats", "meow_irl", "blep", "catreactiongifs", "catpranks", "floof"]
+    }
+}
