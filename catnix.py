@@ -33,12 +33,14 @@ class RedditScraper(threading.Thread):
             temp_visited = set()
             for sr in self.config['subreddits']:
                 for submission in self.reddit.subreddit(sr).hot(limit=10):
-                    temp_visited.add(submission.fullname)
-                    if submission.fullname not in self.visited and submission.url:
-                        # self.visited.add(submission.fullname)
-                        sendco = discord_client.send_message(self.channel, '```{}```{}'.format(submission.title, submission.url))
-                        asyncio.run_coroutine_threadsafe(sendco, discord_client.loop)
-                        time.sleep(3)
+                    try:
+                        if submission.fullname not in self.visited and submission.url:
+                            sendco = discord_client.send_message(self.channel, '```{}```{}'.format(submission.title, submission.url))
+                            asyncio.run_coroutine_threadsafe(sendco, discord_client.loop)
+                            time.sleep(3)
+                        temp_visited.add(submission.fullname)
+                    except Exception as ex:
+                        print('exception in reddit thread: \n' + ex)
             
             self.visited = temp_visited
             with open('reddit_visited.temp', 'wb') as f:
